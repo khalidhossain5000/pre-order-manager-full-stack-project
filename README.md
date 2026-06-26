@@ -1,258 +1,186 @@
 # Preorder Manager
 
-A full-stack preorder management application built as a job assessment project. It allows users to create, view, update, delete, filter, sort, and paginate preorders through a clean and responsive UI.
-
-**Live Demo:**
-
-- 🌐 Frontend: [https://xubitar-pre-order-manager.vercel.app](https://xubitar-pre-order-manager.vercel.app)
-- 🚀 Backend API: [https://preorder-manager-chip.onrender.com](https://preorder-manager-chip.onrender.com)
+A full-stack preorder management application built with **Next.js 16**, **Prisma**, and **SQLite**. Supports creating, updating, filtering, sorting, and paginating preorders — all handled server-side.
 
 ---
 
-## ⚡ Quick Setup
+## 🚀 Quick Setup
 
 ### Prerequisites
 
-Make sure the following are installed on your machine:
-
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) v18 or higher
+- npm or yarn
 
 ---
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/khalidhossain5000/preorder-manager.git
-cd preorder-manager
+git clone https://github.com/khalidhossain5000/pre-order-manager-full-stack-project.git
+cd pre-order-manager-full-stack-project
 ```
 
 ---
 
-### 2. Backend Setup (`xubitar-pre-order-manager-server`)
-
-```bash
-cd xubitar-pre-order-manager-server
-```
-
-**Install dependencies:**
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-**Create environment file:**
+---
 
-Create a `.env` file in the root of the server folder:
+### 3. Set Up Environment Variables
+
+Create a `.env` file in the root of the project:
 
 ```env
-CORS_URL="http://localhost:3000"
 DATABASE_URL="file:./dev.db"
-PORT=5000
 ```
 
-**Run Prisma migrations and generate client:**
+---
+
+### 4. Set Up the Database
+
+Run Prisma migrations to create the SQLite database and apply the schema:
 
 ```bash
 npx prisma migrate dev --name init
-npx prisma generate
 ```
 
-**Seed sample data:**
+> This will create a `dev.db` file inside the `prisma/` folder automatically.
 
-```bash
-npx prisma db seed
-```
+---
 
-> If no seed script exists, you can manually insert data via Prisma Studio (see below).
+### 5. (Optional) Open Prisma Studio
 
-**Start the development server:**
-
-```bash
-npm run dev
-```
-
-The backend will be running at: `http://localhost:5000`
-
-**Optional — Open Prisma Studio to view/manage database:**
+You can use Prisma Studio to manually add sample preorder data:
 
 ```bash
 npx prisma studio
 ```
 
+Open [http://localhost:5555](http://localhost:5555) in your browser and add records to the `PreOrder` table.
+
 ---
 
-### 3. Frontend Setup (`xubitar-pre-order-manager-client`)
-
-Open a new terminal and navigate to the client folder:
-
-```bash
-cd xubitar-pre-order-manager-client
-```
-
-**Install dependencies:**
-
-```bash
-npm install
-```
-
-**Create environment file:**
-
-Create a `.env.local` file in the root of the client folder:
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-**Start the development server:**
+### 6. Run the Development Server
 
 ```bash
 npm run dev
 ```
 
-The frontend will be running at: `http://localhost:3000`
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-### 4. Open the App
+## 🌐 Live Demo
 
-Visit [http://localhost:3000](http://localhost:3000) in your browser.
+**[https://pre-order-manager-full-stack-project.onrender.com](https://pre-order-manager-full-stack-project.onrender.com)**
+
+> Hosted on [Render](https://render.com). Note: The free tier may take 30–60 seconds to spin up on first load.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-preorder-manager/
-├── xubitar-pre-order-manager-client/   # Next.js Frontend
-│   ├── app/
-│   ├── components/
-│   ├── public/
-│   ├── .env.local
-│   └── package.json
-│
-└── xubitar-pre-order-manager-server/   # Express + TypeScript Backend
-    ├── generated/                       # Prisma generated client
-    ├── prisma/
-    │   ├── migrations/
-    │   └── schema/
-    ├── src/
-    │   ├── lib/
-    │   ├── modules/
-    │   │   ├── config/
-    │   │   └── preorder/
-    │   │       ├── controller.preorder.ts
-    │   │       ├── interface.preorder.ts
-    │   │       ├── route.preorder.ts
-    │   │       └── service.preorder.ts
-    │   ├── types/
-    │   ├── utils/
-    │   ├── app.ts
-    │   └── server.ts
-    ├── .env
-    ├── .env.example
-    ├── .gitignore
-    ├── dev.db
-    ├── package.json
-    ├── package-lock.json
-    ├── prisma.config.ts
-    ├── tsconfig.json
-    └── tsup.config.ts
+pre-order-manager-full-stack-project/
+├── app/
+│   ├── api/
+│   │   └── preorders/          # API route handlers (GET, POST, PATCH, DELETE)
+│   ├── preorders/
+│   │   └── [id]/               # Dynamic update page
+│   ├── create-preorder/        # Create preorder page
+|   ├── update-preorder/        # Update Preorder page
+│   ├── page.tsx                # Preorder list page (home)
+│   └── layout.tsx
+├── components/                 # Reusable UI components
+├── lib/
+│   └── prisma.ts               # Prisma client singleton
+├── prisma/
+│   ├── schema.prisma           # Database schema
+│   └── dev.db                  # SQLite database (auto-generated)
+├── public/
+├── .env                        # Environment variables (not committed)
+├── next.config.ts
+└── package.json
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
-| Layer      | Technology                          |
-| ---------- | ----------------------------------- |
-| Frontend   | Next.js, React, Tailwind CSS        |
-| Backend    | Node.js, Express, TypeScript        |
-| Database   | SQLite (via Prisma ORM)             |
-| Deployment | Vercel (frontend), Render (backend) |
+| Layer      | Technology               |
+|------------|--------------------------|
+| Framework  | Next.js 16 (App Router)  |
+| Language   | TypeScript               |
+| Database   | SQLite (via Prisma ORM)  |
+| Styling    | Tailwind CSS             |
+| Icons      | Lucide React             |
+
+
+---
+
+## 🗄 Database Schema
+
+```prisma
+model PreOrder {
+  id           String       @id @default(uuid())
+  name         String
+  products     Int
+  preOrderWhen PreorderWhen
+  status       Status
+  startsAt     DateTime
+  endsAt       DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+enum PreorderWhen {
+  NOW
+  LATER
+  // (your actual enum values)
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+```
 
 ---
 
 ## ✨ Features
 
-- 📋 **Preorder List** — View all preorders in a paginated table
-- 🔍 **Filter** — Filter by status: All / Active / Inactive (server-side)
-- 🔃 **Sort** — Sort by multiple fields (server-side)
-- 📄 **Pagination** — Server-side pagination
-- ✅ **Row & Select All Checkboxes** — Multi-row selection support
-- 🔄 **Status Toggle** — Switch Active/Inactive directly in the list with instant DB update
-- 🗑️ **Delete** — Remove a preorder from the database
-- ✏️ **Update Preorder** — Edit existing preorder with pre-filled form
-- ➕ **Create Preorder** — Add a new preorder via a dedicated page
-- ⏳ **Loading States** — Loader shown during save/update operations
+- **Preorder List Page** — displays all preorders in a table with:
+  - Filter by status: All / Active / Inactive (server-side)
+  - Sort by multiple fields (server-side)
+  - Pagination (server-side)
+  - Row checkboxes and select-all checkbox
+- **Create Preorder** — form to add a new preorder record to the database
+- **Update Preorder** — pre-filled form to edit an existing preorder
+- **Status Toggle** — switch Active/Inactive inline with instant DB update and visual feedback
+- **Delete** — remove a preorder from the database, list updates immediately
+- **Loading States** — loader shown while saving on create/update page
+- **Navigation** — Cancel, Save, and Back buttons all redirect to the list page
 
 ---
 
-## 🔌 API Endpoint Reference
-
-Base URL (Local): `http://localhost:5000`
-
-Base URL (Live): `https://preorder-manager-chip.onrender.com`
-
-| Method   | Endpoint                    | Description                                |
-| -------- | --------------------------- | ------------------------------------------ |
-| `POST`   | `/create`                   | Create a new preorder                      |
-| `GET`    | `/`                         | Get all preorders (filter, sort, paginate) |
-| `GET`    | `/:id`                      | Get a single preorder by ID                |
-| `PATCH`  | `/update-status/:id/status` | Toggle Active/Inactive status              |
-| `PUT`    | `/update-preorder/:id`      | Update a preorder by ID                    |
-| `DELETE` | `/delete/:id`               | Delete a preorder by ID                    |
-
-### Query Parameters for `GET /`
-
-| Parameter | Type     | Description                      |
-| --------- | -------- | -------------------------------- |
-| `status`  | `string` | Filter by `active` or `inactive` |
-| `sort`    | `string` | Field to sort by                 |
-| `order`   | `string` | `asc` or `desc`                  |
-| `page`    | `number` | Page number (default: `1`)       |
-| `limit`   | `number` | Items per page (default: `10`)   |
-
----
-
-### Live API Endpoint Reference
-
-Base URL: `https://preorder-manager-chip.onrender.com`
-
-| Method   | Full Endpoint                                                         |
-| -------- | --------------------------------------------------------------------- |
-| `POST`   | `https://preorder-manager-chip.onrender.com/create`                   |
-| `GET`    | `https://preorder-manager-chip.onrender.com/?page=1&limit=10`         |
-| `GET`    | `https://preorder-manager-chip.onrender.com/:id`                      |
-| `PATCH`  | `https://preorder-manager-chip.onrender.com/update-status/:id/status` |
-| `PUT`    | `https://preorder-manager-chip.onrender.com/update-preorder/:id`      |
-| `DELETE` | `https://preorder-manager-chip.onrender.com/delete/:id`               |
-
----
-
-## Troubleshooting
-
-**Prisma client not found?**
+## 📜 Available Scripts
 
 ```bash
-npx prisma generate
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npx prisma studio    # Open Prisma Studio (database GUI)
+npx prisma migrate dev --name <name>   # Run a new migration
 ```
-
-**Database not created?**
-
-```bash
-npx prisma migrate deploy
-```
-
-**Port already in use?**
-Change the `PORT` value in the backend `.env` file and update `NEXT_PUBLIC_API_URL` in the frontend `.env` accordingly.
-
-**CORS error in browser?**
-Make sure the backend is running and the `NEXT_PUBLIC_API_URL` in the frontend `.env` matches the backend URL exactly.
 
 ---
 
-## 📬 Contact
+## 📝 Notes
 
-For any queries, feel free to reach out.
+- No seed script is included. Use **Prisma Studio** (`npx prisma studio`) to manually add sample data after setup.
+- The SQLite `dev.db` file is auto-generated on first migration and is not committed to the repository.
+- All filtering, sorting, and pagination logic runs on the **server side** via Next.js API routes — not on the client.

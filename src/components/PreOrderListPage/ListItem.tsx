@@ -14,28 +14,23 @@ export interface Preorder {
   startsAt: string;
   endsAt?: string;
   status: "ACTIVE" | "INACTIVE";
-  meta?:string | number
+  meta?: string | number;
 }
 
 type ListItemProps = {
   preorder: Preorder;
   refetch: () => void;
   selected: boolean;
-    onSelect: (id: string, checked: boolean) => void;
-
+  onSelect: (id: string, checked: boolean) => void;
 };
 
-const ListItem = ({ preorder, refetch,selected,onSelect }: ListItemProps) => {
+const ListItem = ({ preorder, refetch, selected, onSelect }: ListItemProps) => {
   const axiosInstance = useAxios();
   const [loading, setLoading] = useState(false);
 
   // const [preorder.status, setpreorder.status] = useState(preorder.status);
 
   const handleToggleStatus = async () => {
- 
-
-
-
     try {
       setLoading(true);
 
@@ -47,7 +42,7 @@ const ListItem = ({ preorder, refetch,selected,onSelect }: ListItemProps) => {
         toast.success("Status updated successfully", {
           position: "top-center",
         });
-        refetch()
+        refetch();
       }
     } catch (error) {
       console.error(error);
@@ -62,9 +57,7 @@ const ListItem = ({ preorder, refetch,selected,onSelect }: ListItemProps) => {
     try {
       setLoading(true);
 
-      const res = await axiosInstance.delete(
-        `/api/preorders/${preorder.id}`,
-      );
+      const res = await axiosInstance.delete(`/api/preorders/${preorder.id}`);
       if (res.data.success) {
         toast.success("Pre Order Deleted Succesfully", {
           position: "top-center",
@@ -79,21 +72,18 @@ const ListItem = ({ preorder, refetch,selected,onSelect }: ListItemProps) => {
     }
   };
 
-  
   return (
-   <tr
-  className={`border-y border-[#dbdcdb] transition-colors ${
-    selected
-      ? "bg-slate-200 shadow-sm"
-      : "hover:bg-gray-50"
-  }`}
->
+    <tr
+      className={`border-y border-[#dbdcdb] transition-colors ${
+        selected ? "bg-slate-200 shadow-sm" : "hover:bg-gray-50"
+      }`}
+    >
       {/* Checkbox */}
       <td className="py-3 pl-4 pr-2 w-10 ">
         <input
           type="checkbox"
           checked={selected}
-            onChange={(e) => onSelect(preorder.id, e.target.checked)}
+          onChange={(e) => onSelect(preorder.id, e.target.checked)}
           className="w-4 h-4 rounded border-gray-300 accent-text-text-primary cursor-pointer"
         />
       </td>
@@ -171,13 +161,13 @@ const ListItem = ({ preorder, refetch,selected,onSelect }: ListItemProps) => {
         <div className="flex items-center gap-2.5">
           {/* Edit Button */}
           <Link href={`/update-preorder/${preorder?.id}`}>
-          <button className="group flex h-9 w-9 items-center justify-center rounded-[10px] border border-neutral-300/70 bg-gradient-to-b from-white to-neutral-50/60 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.06),0_2px_4px_-1px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:border-neutral-300 hover:shadow-[0_5px_8px_-1px_rgba(0,0,0,0.08),0_2px_5px_-1px_rgba(0,0,0,0.05)] active:scale-[0.98] cursor-pointer">
-            <Pencil
-              size={16}
-              strokeWidth={1.5}
-              className="text-neutral-700 transition-colors group-hover:text-neutral-900"
-            />
-          </button>
+            <button className="group flex h-9 w-9 items-center justify-center rounded-[10px] border border-neutral-300/70 bg-gradient-to-b from-white to-neutral-50/60 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.06),0_2px_4px_-1px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-200 hover:border-neutral-300 hover:shadow-[0_5px_8px_-1px_rgba(0,0,0,0.08),0_2px_5px_-1px_rgba(0,0,0,0.05)] active:scale-[0.98] cursor-pointer">
+              <Pencil
+                size={16}
+                strokeWidth={1.5}
+                className="text-neutral-700 transition-colors group-hover:text-neutral-900"
+              />
+            </button>
           </Link>
 
           {/* Delete Button */}

@@ -60,7 +60,6 @@ const ListTable = () => {
           filter: activeTab === "All" ? undefined : activeTab,
         },
       });
-console.log(res,'this is res',res.data.data)
       return res.data.data;
     },
     placeholderData: keepPreviousData,
@@ -76,7 +75,7 @@ console.log(res,'this is res',res.data.data)
   // current page selected checkbox func ends
   const totalPages = preorderResponse?.meta.totalPages ?? 1;
   const total = preorderResponse?.meta.total ?? 0;
-console.log(preorderResponse?.meta.totalPages,'this is total pages')
+
   if (isLoading && !preorderResponse) return <GlobalSpinner />;
 
   const handlePrev = () => {
@@ -109,7 +108,7 @@ console.log(preorderResponse?.meta.totalPages,'this is total pages')
     }
   };
 
-  console.log(selectedIds, "this is selected id here");
+ 
   return (
     <div className="min-h-screen bg-[#efefef] p-8 max-w-6xl mx-auto">
       <div className="flex flex-col md:flex-row items-center justify-between mb-5">
