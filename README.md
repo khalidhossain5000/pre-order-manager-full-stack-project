@@ -52,15 +52,25 @@ npx prisma migrate dev --name init
 
 ---
 
-### 5. (Optional) Open Prisma Studio
+### 5. Add Sample Data
 
-You can use Prisma Studio to manually add sample preorder data:
+You can populate the database in one of two ways:
+
+**Option A — Seed script (recommended):**
+
+```bash
+npm run seed
+```
+
+> This runs `prisma/seed.ts` using `tsx`.
+
+**Option B — Prisma Studio (manual):**
 
 ```bash
 npx prisma studio
 ```
 
-Open [http://localhost:5555](http://localhost:5555) in your browser and add records to the `PreOrder` table.
+Open [http://localhost:5555](http://localhost:5555) in your browser and add records to the `PreOrder` table manually.
 
 ---
 
@@ -92,7 +102,7 @@ pre-order-manager-full-stack-project/
 │   ├── preorders/
 │   │   └── [id]/               # Dynamic update page
 │   ├── create-preorder/        # Create preorder page
-|   ├── update-preorder/        # Update Preorder page
+│   ├── update-preorder/        # Update preorder page
 │   ├── page.tsx                # Preorder list page (home)
 │   └── layout.tsx
 ├── components/                 # Reusable UI components
@@ -100,6 +110,7 @@ pre-order-manager-full-stack-project/
 │   └── prisma.ts               # Prisma client singleton
 ├── prisma/
 │   ├── schema.prisma           # Database schema
+│   ├── seed.ts                 # Seed script for sample data
 │   └── dev.db                  # SQLite database (auto-generated)
 ├── public/
 ├── .env                        # Environment variables (not committed)
@@ -111,14 +122,14 @@ pre-order-manager-full-stack-project/
 
 ## 🛠 Tech Stack
 
-| Layer      | Technology               |
-|------------|--------------------------|
-| Framework  | Next.js 16 (App Router)  |
-| Language   | TypeScript               |
-| Database   | SQLite (via Prisma ORM)  |
-| Styling    | Tailwind CSS             |
-| Icons      | Lucide React             |
-
+| Layer         | Technology               |
+|---------------|--------------------------|
+| Framework     | Next.js 16 (App Router)  |
+| Language      | TypeScript               |
+| Database      | SQLite (via Prisma ORM)  |
+| Styling       | Tailwind CSS             |
+| Data Fetching | TanStack Query           |
+| Icons         | Lucide React             |
 
 ---
 
@@ -138,9 +149,8 @@ model PreOrder {
 }
 
 enum PreorderWhen {
-  NOW
-  LATER
-  // (your actual enum values)
+  REGARDLESS_OF_STOCK
+  OUT_OF_STOCK
 }
 
 enum Status {
@@ -173,6 +183,7 @@ enum Status {
 npm run dev          # Start development server
 npm run build        # Build for production
 npm run start        # Start production server
+npm run seed         # Seed the database with sample data
 npx prisma studio    # Open Prisma Studio (database GUI)
 npx prisma migrate dev --name <name>   # Run a new migration
 ```
@@ -181,6 +192,6 @@ npx prisma migrate dev --name <name>   # Run a new migration
 
 ## 📝 Notes
 
-- No seed script is included. Use **Prisma Studio** (`npx prisma studio`) to manually add sample data after setup.
+- Run `npm run seed` after migration to populate sample data, or use Prisma Studio to add data manually.
 - The SQLite `dev.db` file is auto-generated on first migration and is not committed to the repository.
 - All filtering, sorting, and pagination logic runs on the **server side** via Next.js API routes — not on the client.
