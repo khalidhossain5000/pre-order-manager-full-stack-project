@@ -1,6 +1,6 @@
 # Preorder Manager
 
-A full-stack preorder management application built with **Next.js 16**, **Prisma**, and **SQLite**. Supports creating, updating, filtering, sorting, and paginating preorders — all handled server-side.
+A full-stack preorder management application built with **Next.js 16**, **Prisma**,**Typescript**, and **SQLite**. Supports creating, updating, filtering, sorting, and paginating preorders — all handled server-side.
 
 ---
 
