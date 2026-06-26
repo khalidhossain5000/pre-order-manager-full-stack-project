@@ -57,6 +57,7 @@ export async function GET(req: NextRequest) {
       {
         success: false,
         message: "Something went wrong",
+              error: error instanceof Error ? error.message : String(error),
       },
       {
         status: 500,
@@ -74,7 +75,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: Request) {
   try {
     const payload = await req.json();
-console.log(payload,'this is payload')
+
     const result = await prisma.preOrder.create({
       data: {
         name: payload.name,
